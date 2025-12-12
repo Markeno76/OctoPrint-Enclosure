@@ -1724,6 +1724,7 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin, octoprint.plugin.TemplateP
                     self._logger.info("Adding GPIO event detect on pin %s with edge: %s", gpio_pin, edge)
                     GPIO.add_event_detect(gpio_pin, edge, callback=self.handle_gpio_control, bouncetime=200)
                 if (rpi_input['action_type'] == 'printer_control' and rpi_input['printer_action'] != 'filament'):
+                    GPIO.setup(gpio_pin, GPIO.IN, pull_up_down=pull_resistor)
                     GPIO.add_event_detect(gpio_pin, edge, callback=self.handle_printer_action, bouncetime=200)
                     self._logger.info("Adding PRINTER CONTROL event detect on pin %s with edge: %s", gpio_pin, edge)
             
@@ -2434,3 +2435,4 @@ def __plugin_load__():
         "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information,
         "octoprint.comm.protocol.temperatures.received": (__plugin_implementation__.get_graph_data, 1)
     }
+
