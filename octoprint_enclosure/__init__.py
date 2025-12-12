@@ -1722,9 +1722,9 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin, octoprint.plugin.TemplateP
 
                 if rpi_input['action_type'] == 'output_control':
                     self._logger.info("Adding GPIO event detect on pin %s with edge: %s", gpio_pin, edge)
-                    GPIO.add_event_detect(gpio_pin, edge, callback=self.handle_gpio_control, bouncetime=200)
+                    #GPIO.add_event_detect(gpio_pin, edge, callback=self.handle_gpio_control, bouncetime=200)
+                    GPIO.add_event_detect(gpio_pin, GPIO.RISING, callback=self.handle_gpio_control, bouncetime=250)
                 if (rpi_input['action_type'] == 'printer_control' and rpi_input['printer_action'] != 'filament'):
-                    # GPIO.setup(gpio_pin, GPIO.IN, pull_up_down=pull_resistor)
                     GPIO.add_event_detect(gpio_pin, edge, callback=self.handle_printer_action, bouncetime=200)
                     self._logger.info("Adding PRINTER CONTROL event detect on pin %s with edge: %s", gpio_pin, edge)
             
